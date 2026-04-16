@@ -104,6 +104,26 @@
       display: flex;
       align-items: center;
     }
+
+    .rating-str {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      /* This keeps the badge perfectly level with the text */
+    }
+
+    .rating-text {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.95rem;
+      font-weight: 400;
+    }
+
+    /* Fixes the spacing between title and price */
+    .card-body p {
+      margin: 0 !important;
+    }
   </style>
 
   <div class="filter-wrapper">
@@ -205,15 +225,30 @@
           <img src="<%= listing.image.url %>" class="card-img-top" style="height: 20rem;" alt="listing-image">
           <div class="card-img-overlay">Hey!</div>
           <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <p class="card-text mb-0"><b>
+                  <%= listing.title %>
+                </b></p>
+
+              <span class="rating-text">
+                <i class="fa-solid fa-star" style="font-size: 0.8rem;"></i>
+                <% if (listing.reviews && listing.reviews.length> 0) {
+                  let sum = 0;
+                  for(let review of listing.reviews) { sum += review.rating; }
+                  let avg = (sum / listing.reviews.length).toFixed(1);
+                  %>
+                  <%= avg %>
+                    <% } else { %>
+                      <span style="font-weight: 300;">New</span>
+                      <% } %>
+              </span>
+            </div>
+
             <p class="card-text">
-              <b>
-                <%= listing.title %>
-              </b></br>
               &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
                 <i class="tax-info">&nbsp;&nbsp;+18% GST</i>
             </p>
           </div>
-
 
         </div>
       </a>

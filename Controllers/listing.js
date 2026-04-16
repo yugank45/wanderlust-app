@@ -120,7 +120,7 @@ module.exports.index = async (req, res) => {
     query.category = category;
   }
 
-  const allListings = await Listing.find(query);
+  const allListings = await Listing.find(query).populate("reviews");
 
   res.render("index.ejs", { allListings, category, q });
 };
